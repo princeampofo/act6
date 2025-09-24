@@ -31,6 +31,29 @@ class _CounterWidgetState extends State<CounterWidget> {
   //set counter value
   int _counter = 0;
 
+  void _incrementCounter() {
+    setState(() {
+      if (_counter < 100) {
+        _counter++;
+      }
+    });
+  }
+
+  void _decrementCounter() {
+    setState(() {
+      if (_counter > 0) {
+        _counter--;
+      }
+    });
+  }
+
+  void _resetCounter() {
+    setState(() {
+      _counter = 0;
+    });
+  }
+
+
   Color _getCounterColor() {
     if (_counter == 0) {
       return Colors.red; // Red when exactly 0
@@ -97,7 +120,7 @@ class _CounterWidgetState extends State<CounterWidget> {
 
               // Ignite button
               ElevatedButton(
-                onPressed: () {},
+                onPressed: _counter < 100 ? _incrementCounter : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                   foregroundColor: Colors.white,
@@ -114,7 +137,7 @@ class _CounterWidgetState extends State<CounterWidget> {
               
               // Abort button
               ElevatedButton(
-                onPressed: () {},
+                onPressed: _counter > 0 ? _decrementCounter : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange,
                   foregroundColor: Colors.white,
@@ -131,7 +154,7 @@ class _CounterWidgetState extends State<CounterWidget> {
               
               // Reset button
               ElevatedButton(
-                onPressed: () {},
+                onPressed: _resetCounter,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
                   foregroundColor: Colors.white,
