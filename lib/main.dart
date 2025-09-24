@@ -1,3 +1,5 @@
+// Name : Prince Larbi Ampofo
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
