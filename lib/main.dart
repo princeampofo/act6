@@ -31,14 +31,19 @@ class _CounterWidgetState extends State<CounterWidget> {
   //set counter value
   int _counter = 0;
 
+  // Increase counter value
   void _incrementCounter() {
     setState(() {
       if (_counter < 100) {
         _counter++;
+        if (_counter == 100) {
+          _showLiftoffDialog();
+        }
       }
     });
   }
-
+  
+  // Decrease counter value
   void _decrementCounter() {
     setState(() {
       if (_counter > 0) {
@@ -47,13 +52,14 @@ class _CounterWidgetState extends State<CounterWidget> {
     });
   }
 
+  // Reset counter to 0
   void _resetCounter() {
     setState(() {
       _counter = 0;
     });
   }
 
-
+  // Determine color based on counter value
   Color _getCounterColor() {
     if (_counter == 0) {
       return Colors.red; // Red when exactly 0
@@ -64,11 +70,43 @@ class _CounterWidgetState extends State<CounterWidget> {
     }
   }
 
+  // Dialog for liftoff
+  void _showLiftoffDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('🚀 LIFTOFF! 🚀'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Mission Successful!',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              Text('The rocket has launched successfully🚀!'),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _resetCounter(); // Reset counter for new mission
+              },
+              child: Text('Start New Mission'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Rocket Launch Controller'),
+        title: const Text('Rocket Launch Controller🚀'),
       ),
       //set up the widget alignment
       body: Column(
@@ -97,6 +135,15 @@ class _CounterWidgetState extends State<CounterWidget> {
                     color: _getCounterColor(), // Dynamic color
                   ),
                 ),
+                if (_counter == 100)
+                  Text(
+                    'LIFTOFF! 🚀',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                    ),
+                  ),
               ],
             ),
           ),
@@ -107,6 +154,9 @@ class _CounterWidgetState extends State<CounterWidget> {
             onChanged: (double value) {
               setState(() {
                 _counter = value.toInt();
+                if (_counter == 100) {
+                  _showLiftoffDialog();
+                }
               });
             },
             activeColor: Colors.blue,
