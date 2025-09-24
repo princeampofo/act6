@@ -31,24 +31,50 @@ class _CounterWidgetState extends State<CounterWidget> {
   //set counter value
   int _counter = 0;
 
+  Color _getCounterColor() {
+    if (_counter == 0) {
+      return Colors.red; // Red when exactly 0
+    } else if (_counter > 50) {
+      return Colors.green; // Green when above 50
+    } else {
+      return Colors.orange; // Orange for values between 1-50
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Rocket Launch Controller'),
       ),
-//set up the widget alignement
+      //set up the widget alignment
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(
-            child: Container(
-              color: Colors.blue,
-              child: Text(
-                //to displays current number
-                '$_counter',
-                style: TextStyle(fontSize: 50.0),
-              ),
+          // fuel level display
+          Container(
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(color: Colors.grey[400]!),
+            ),
+            child: Column(
+              children: [
+                Text(
+                  'Fuel Level',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  '$_counter',
+                  style: TextStyle(
+                    fontSize: 60.0,
+                    fontWeight: FontWeight.bold,
+                    color: _getCounterColor(), // Dynamic color
+                  ),
+                ),
+              ],
             ),
           ),
           Slider(
